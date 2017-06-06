@@ -2784,7 +2784,6 @@ var nameShape = exports.nameShape = _propTypes2.default.oneOfType([_propTypes2.d
   appearActive: _propTypes2.default.string
 })]);
 },{"prop-types":undefined,"react":undefined}],40:[function(require,module,exports){
-(function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -2805,7 +2804,7 @@ var nameShape = exports.nameShape = _propTypes2.default.oneOfType([_propTypes2.d
 
 var warning = function() {};
 
-if (process.env.NODE_ENV !== 'production') {
+if ("production" !== 'production') {
   warning = function(condition, format, args) {
     var len = arguments.length;
     args = new Array(len > 2 ? len - 2 : 0);
@@ -2846,8 +2845,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = warning;
 
-}).call(this,require('_process'))
-},{"_process":34}],41:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -3441,7 +3439,7 @@ var PaginatedThumbnails = (function (_Component) {
 				icon: 'arrowRight',
 				onClick: this.gotoNext,
 				style: arrowStyles,
-				title: 'Previous (Right arrow key)',
+				title: 'Next (Right arrow key)',
 				type: 'button'
 			});
 		}
@@ -4066,6 +4064,8 @@ var Lightbox = (function (_Component) {
 
 			if (!image) return;
 
+			if (image.type === 'video') return;
+
 			var img = new Image();
 
 			img.src = image.src;
@@ -4215,7 +4215,11 @@ var Lightbox = (function (_Component) {
 			return _react2['default'].createElement(
 				'figure',
 				{ className: (0, _aphroditeNoImportant.css)(classes.figure) },
-				_react2['default'].createElement('img', {
+				image.type === 'video' ? _react2['default'].createElement(
+					'video',
+					{ controls: true, name: 'media', className: (0, _aphroditeNoImportant.css)(classes.video) },
+					_react2['default'].createElement('source', { src: image.src, type: 'video/mp4' })
+				) : _react2['default'].createElement('img', {
 					className: (0, _aphroditeNoImportant.css)(classes.image),
 					onClick: !!onClickImage && onClickImage,
 					sizes: sizes,
@@ -4332,6 +4336,12 @@ var classes = _aphroditeNoImportant.StyleSheet.create({
 		// disable user select
 		WebkitTouchCallout: 'none',
 		userSelect: 'none'
+	},
+	video: {
+		display: 'block', // removes browser default gutter
+		height: 'auto',
+		margin: '0 auto', // maintain center on very short screens OR very narrow image
+		maxWidth: '100%'
 	}
 });
 

@@ -82,6 +82,8 @@ class Lightbox extends Component {
 
 		if (!image) return;
 
+		if (image.type === 'video') return;
+
 		const img = new Image();
 
 		img.src = image.src;
@@ -225,18 +227,23 @@ class Lightbox extends Component {
 					https://fb.me/react-unknown-prop is resolved
 					<Swipeable onSwipedLeft={this.gotoNext} onSwipedRight={this.gotoPrev} />
 				*/}
-				<img
-					className={css(classes.image)}
-					onClick={!!onClickImage && onClickImage}
-					sizes={sizes}
-					alt={image.alt}
-					src={image.src}
-					srcSet={srcset}
-					style={{
-						cursor: this.props.onClickImage ? 'pointer' : 'auto',
-						maxHeight: `calc(100vh - ${heightOffset})`,
-					}}
-				/>
+				{image.type === 'video' ? 
+					<video controls name='media' className={css(classes.video)}>
+						<source src={image.src} type='video/mp4' />
+					</video> :
+					<img
+						className={css(classes.image)}
+						onClick={!!onClickImage && onClickImage}
+						sizes={sizes}
+						alt={image.alt}
+						src={image.src}
+						srcSet={srcset}
+						style={{
+							cursor: this.props.onClickImage ? 'pointer' : 'auto',
+							maxHeight: `calc(100vh - ${heightOffset})`,
+						}}
+					/>
+				}
 				<Footer
 					caption={images[currentImage].caption}
 					countCurrent={currentImage + 1}
@@ -335,6 +342,12 @@ const classes = StyleSheet.create({
 		// disable user select
 		WebkitTouchCallout: 'none',
 		userSelect: 'none',
+	},
+	video: {
+		display: 'block', // removes browser default gutter
+		height: 'auto',
+		margin: '0 auto', // maintain center on very short screens OR very narrow image
+		maxWidth: '100%',
 	},
 });
 
