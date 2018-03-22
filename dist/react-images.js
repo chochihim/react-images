@@ -1,10 +1,12 @@
-import PropTypes from 'prop-types';
-import React, { Children, Component } from 'react';
-import { StyleSheet, css } from 'aphrodite';
-import ScrollLock from 'react-scrolllock';
-import { StyleSheet as StyleSheet$1, css as css$1 } from 'aphrodite/no-important';
-import { CSSTransitionGroup } from 'react-transition-group';
-import { render, unmountComponentAtNode } from 'react-dom';
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('prop-types'), require('react'), require('aphrodite'), require('react-scrolllock'), require('aphrodite/no-important'), require('react-transition-group'), require('react-dom')) :
+	typeof define === 'function' && define.amd ? define(['prop-types', 'react', 'aphrodite', 'react-scrolllock', 'aphrodite/no-important', 'react-transition-group', 'react-dom'], factory) :
+	(global.Lightbox = factory(global.PropTypes,global.React,global.aphrodite,global.ScrollLock,global.aphrodite,global.ReactTransitionGroup,global.ReactDOM));
+}(this, (function (PropTypes,React,aphrodite,ScrollLock,noImportant,reactTransitionGroup,reactDom) { 'use strict';
+
+PropTypes = PropTypes && PropTypes.hasOwnProperty('default') ? PropTypes['default'] : PropTypes;
+var React__default = 'default' in React ? React['default'] : React;
+ScrollLock = ScrollLock && ScrollLock.hasOwnProperty('default') ? ScrollLock['default'] : ScrollLock;
 
 // ==============================
 // THEME
@@ -316,7 +318,7 @@ var Icon = function Icon(_ref) {
 
 	var icon = icons[type];
 
-	return React.createElement('span', _extends({
+	return React__default.createElement('span', _extends({
 		dangerouslySetInnerHTML: { __html: icon(fill) }
 	}, props));
 };
@@ -337,17 +339,17 @@ function Arrow(_ref, _ref2) {
 	    size = _ref.size,
 	    props = objectWithoutProperties(_ref, ['direction', 'icon', 'onClick', 'size']);
 
-	var classes = StyleSheet$1.create(deepMerge(defaultStyles$1, theme$$1));
+	var classes = noImportant.StyleSheet.create(deepMerge(defaultStyles$1, theme$$1));
 
-	return React.createElement(
+	return React__default.createElement(
 		'button',
 		_extends({
 			type: 'button',
-			className: css$1(classes.arrow, classes['arrow__direction__' + direction], size && classes['arrow__size__' + size]),
+			className: noImportant.css(classes.arrow, classes['arrow__direction__' + direction], size && classes['arrow__size__' + size]),
 			onClick: onClick,
 			onTouchEnd: onClick
 		}, props),
-		React.createElement(Icon, { fill: !!theme$$1.arrow && theme$$1.arrow.fill || theme.arrow.fill, type: icon })
+		React__default.createElement(Icon, { fill: !!theme$$1.arrow && theme$$1.arrow.fill || theme.arrow.fill, type: icon })
 	);
 }
 
@@ -413,10 +415,10 @@ function Container(_ref, _ref2) {
 	var theme$$1 = _ref2.theme;
 	var props = objectWithoutProperties(_ref, []);
 
-	var classes = StyleSheet$1.create(deepMerge(defaultStyles$2, theme$$1));
+	var classes = noImportant.StyleSheet.create(deepMerge(defaultStyles$2, theme$$1));
 
-	return React.createElement('div', _extends({ id: 'lightboxBackdrop',
-		className: css$1(classes.container)
+	return React__default.createElement('div', _extends({ id: 'lightboxBackdrop',
+		className: noImportant.css(classes.container)
 	}, props));
 }
 
@@ -455,24 +457,24 @@ function Footer(_ref, _ref2) {
 
 	if (!caption && !showCount) return null;
 
-	var classes = StyleSheet$1.create(deepMerge(defaultStyles$3, theme$$1));
+	var classes = noImportant.StyleSheet.create(deepMerge(defaultStyles$3, theme$$1));
 
-	var imageCount = showCount ? React.createElement(
+	var imageCount = showCount ? React__default.createElement(
 		'div',
-		{ className: css$1(classes.footerCount) },
+		{ className: noImportant.css(classes.footerCount) },
 		countCurrent,
 		countSeparator,
 		countTotal
-	) : React.createElement('span', null);
+	) : React__default.createElement('span', null);
 
-	return React.createElement(
+	return React__default.createElement(
 		'div',
-		_extends({ className: css$1(classes.footer) }, props),
-		caption ? React.createElement(
+		_extends({ className: noImportant.css(classes.footer) }, props),
+		caption ? React__default.createElement(
 			'figcaption',
-			{ className: css$1(classes.footerCaption) },
+			{ className: noImportant.css(classes.footerCaption) },
 			caption
-		) : React.createElement('span', null),
+		) : React__default.createElement('span', null),
 		imageCount
 	);
 }
@@ -520,20 +522,20 @@ function Header(_ref, _ref2) {
 	    closeButtonTitle = _ref.closeButtonTitle,
 	    props = objectWithoutProperties(_ref, ['customControls', 'onClose', 'showCloseButton', 'closeButtonTitle']);
 
-	var classes = StyleSheet$1.create(deepMerge(defaultStyles$4, theme$$1));
+	var classes = noImportant.StyleSheet.create(deepMerge(defaultStyles$4, theme$$1));
 
-	return React.createElement(
+	return React__default.createElement(
 		'div',
-		_extends({ className: css$1(classes.header) }, props),
-		customControls ? customControls : React.createElement('span', null),
-		!!showCloseButton && React.createElement(
+		_extends({ className: noImportant.css(classes.header) }, props),
+		customControls ? customControls : React__default.createElement('span', null),
+		!!showCloseButton && React__default.createElement(
 			'button',
 			{
 				title: closeButtonTitle,
-				className: css$1(classes.close),
+				className: noImportant.css(classes.close),
 				onClick: onClose
 			},
-			React.createElement(Icon, { fill: !!theme$$1.close && theme$$1.close.fill || theme.close.fill, type: 'close' })
+			React__default.createElement(Icon, { fill: !!theme$$1.close && theme$$1.close.fill || theme.close.fill, type: 'close' })
 		)
 	);
 }
@@ -579,10 +581,10 @@ function Thumbnail(_ref, _ref2) {
 	var theme$$1 = _ref2.theme;
 
 	var url = thumbnail ? thumbnail : src;
-	var classes = StyleSheet$1.create(deepMerge(defaultStyles$5, theme$$1));
+	var classes = noImportant.StyleSheet.create(deepMerge(defaultStyles$5, theme$$1));
 
-	return React.createElement('div', {
-		className: css$1(classes.thumbnail, active && classes.thumbnail__active),
+	return React__default.createElement('div', {
+		className: noImportant.css(classes.thumbnail, active && classes.thumbnail__active),
 		onClick: function onClick(e) {
 			e.preventDefault();
 			e.stopPropagation();
@@ -622,7 +624,7 @@ var defaultStyles$5 = {
 	}
 };
 
-var classes$1 = StyleSheet$1.create({
+var classes$1 = noImportant.StyleSheet.create({
 	paginatedThumbnails: {
 		bottom: theme.container.gutter.vertical,
 		height: theme.thumbnail.size,
@@ -741,7 +743,7 @@ var PaginatedThumbnails = function (_Component) {
 		value: function renderArrowPrev() {
 			if (this.getFirst() <= 0) return null;
 
-			return React.createElement(Arrow, {
+			return React__default.createElement(Arrow, {
 				direction: 'left',
 				size: 'small',
 				icon: 'arrowLeft',
@@ -761,7 +763,7 @@ var PaginatedThumbnails = function (_Component) {
 			var totalCount = 2 * offset + 1;
 			if (this.getFirst() + totalCount >= images.length) return null;
 
-			return React.createElement(Arrow, {
+			return React__default.createElement(Arrow, {
 				direction: 'right',
 				size: 'small',
 				icon: 'arrowRight',
@@ -792,12 +794,12 @@ var PaginatedThumbnails = function (_Component) {
 				thumbnails = images.slice(baseOffset, baseOffset + totalCount);
 			}
 
-			return React.createElement(
+			return React__default.createElement(
 				'div',
-				{ className: css$1(classes$1.paginatedThumbnails) },
+				{ className: noImportant.css(classes$1.paginatedThumbnails) },
 				this.renderArrowPrev(),
 				thumbnails.map(function (img, idx) {
-					return React.createElement(Thumbnail, _extends({ key: baseOffset + idx
+					return React__default.createElement(Thumbnail, _extends({ key: baseOffset + idx
 					}, img, {
 						index: baseOffset + idx,
 						onClick: onClickThumbnail,
@@ -808,7 +810,7 @@ var PaginatedThumbnails = function (_Component) {
 		}
 	}]);
 	return PaginatedThumbnails;
-}(Component);
+}(React.Component);
 
 PaginatedThumbnails.propTypes = {
 	currentImage: PropTypes.number,
@@ -836,11 +838,11 @@ var PassContext = function (_Component) {
 	}, {
 		key: 'render',
 		value: function render$$1() {
-			return Children.only(this.props.children);
+			return React.Children.only(this.props.children);
 		}
 	}]);
 	return PassContext;
-}(Component);
+}(React.Component);
 
 PassContext.propTypes = {
 	context: PropTypes.object.isRequired
@@ -876,18 +878,18 @@ var Portal = function (_Component) {
 			var duration = 200;
 			var styles = '\n\t\t\t\t.fade-enter { opacity: 0.01; }\n\t\t\t\t.fade-enter.fade-enter-active { opacity: 1; transition: opacity ' + duration + 'ms; }\n\t\t\t\t.fade-leave { opacity: 1; }\n\t\t\t\t.fade-leave.fade-leave-active { opacity: 0.01; transition: opacity ' + duration + 'ms; }\n\t\t';
 
-			render(React.createElement(
+			reactDom.render(React__default.createElement(
 				PassContext,
 				{ context: this.context },
-				React.createElement(
+				React__default.createElement(
 					'div',
 					null,
-					React.createElement(
+					React__default.createElement(
 						'style',
 						null,
 						styles
 					),
-					React.createElement(CSSTransitionGroup, _extends({
+					React__default.createElement(reactTransitionGroup.CSSTransitionGroup, _extends({
 						component: 'div',
 						transitionName: 'fade',
 						transitionEnterTimeout: duration,
@@ -899,7 +901,7 @@ var Portal = function (_Component) {
 	}, {
 		key: 'componentWillUnmount',
 		value: function componentWillUnmount() {
-			unmountComponentAtNode(this.portalElement);
+			reactDom.unmountComponentAtNode(this.portalElement);
 			document.body.removeChild(this.portalElement);
 		}
 	}, {
@@ -909,19 +911,19 @@ var Portal = function (_Component) {
 		}
 	}]);
 	return Portal;
-}(Component);
+}(React.Component);
 
 Portal.contextTypes = {
 	theme: PropTypes.object.isRequired
 };
 
 var Spinner = function Spinner(props) {
-	var classes = StyleSheet$1.create(styles(props));
+	var classes = noImportant.StyleSheet.create(styles(props));
 
-	return React.createElement(
+	return React__default.createElement(
 		'div',
-		{ className: css$1(classes.spinner) },
-		React.createElement('div', { className: css$1(classes.ripple) })
+		{ className: noImportant.css(classes.spinner) },
+		React__default.createElement('div', { className: noImportant.css(classes.ripple) })
 	);
 };
 
@@ -1014,7 +1016,7 @@ var Lightbox = function (_Component) {
 		var _this = possibleConstructorReturn(this, (Lightbox.__proto__ || Object.getPrototypeOf(Lightbox)).call(this, props));
 
 		_this.theme = deepMerge(theme, props.theme);
-		_this.classes = StyleSheet.create(deepMerge(defaultStyles, _this.theme));
+		_this.classes = aphrodite.StyleSheet.create(deepMerge(defaultStyles, _this.theme));
 		_this.state = { imageLoaded: false };
 
 		bindFunctions.call(_this, ['gotoNext', 'gotoPrev', 'closeBackdrop', 'handleKeyboardInput', 'handleImageLoaded']);
@@ -1191,7 +1193,7 @@ var Lightbox = function (_Component) {
 		value: function renderArrowPrev() {
 			if (this.props.currentImage === 0) return null;
 
-			return React.createElement(Arrow, {
+			return React__default.createElement(Arrow, {
 				direction: 'left',
 				icon: 'arrowLeft',
 				onClick: this.gotoPrev,
@@ -1204,7 +1206,7 @@ var Lightbox = function (_Component) {
 		value: function renderArrowNext() {
 			if (this.props.currentImage === this.props.images.length - 1) return null;
 
-			return React.createElement(Arrow, {
+			return React__default.createElement(Arrow, {
 				direction: 'right',
 				icon: 'arrowRight',
 				onClick: this.gotoNext,
@@ -1223,26 +1225,26 @@ var Lightbox = function (_Component) {
 			var imageLoaded = this.state.imageLoaded;
 
 
-			if (!isOpen) return React.createElement('span', { key: 'closed' });
+			if (!isOpen) return React__default.createElement('span', { key: 'closed' });
 
 			var offsetThumbnails = 0;
 			if (showThumbnails) {
 				offsetThumbnails = this.theme.thumbnail.size + this.theme.container.gutter.vertical;
 			}
 
-			return React.createElement(
+			return React__default.createElement(
 				Container,
 				{
 					key: 'open',
 					onClick: backdropClosesModal && this.closeBackdrop,
 					onTouchEnd: backdropClosesModal && this.closeBackdrop
 				},
-				React.createElement(
+				React__default.createElement(
 					'div',
 					null,
-					React.createElement(
+					React__default.createElement(
 						'div',
-						{ className: css(this.classes.content), style: { marginBottom: offsetThumbnails, maxWidth: width } },
+						{ className: aphrodite.css(this.classes.content), style: { marginBottom: offsetThumbnails, maxWidth: width } },
 						imageLoaded && this.renderHeader(),
 						this.renderImages(),
 						this.renderSpinner(),
@@ -1251,7 +1253,7 @@ var Lightbox = function (_Component) {
 					imageLoaded && this.renderThumbnails(),
 					imageLoaded && this.renderArrowPrev(),
 					imageLoaded && this.renderArrowNext(),
-					this.props.preventScroll && React.createElement(ScrollLock, null)
+					this.props.preventScroll && React__default.createElement(ScrollLock, null)
 				)
 			);
 		}
@@ -1275,15 +1277,15 @@ var Lightbox = function (_Component) {
 			var thumbnailsSize = showThumbnails ? this.theme.thumbnail.size : 0;
 			var heightOffset = this.theme.header.height + this.theme.footer.height + thumbnailsSize + this.theme.container.gutter.vertical + 'px';
 
-			return React.createElement(
+			return React__default.createElement(
 				'figure',
-				{ className: css(this.classes.figure) },
-				image.type === 'video' ? React.createElement(
+				{ className: aphrodite.css(this.classes.figure) },
+				image.type === 'video' ? React__default.createElement(
 					'video',
-					{ controls: true, name: 'media', className: css(classes.video) },
-					React.createElement('source', { src: image.src, type: 'video/mp4' })
-				) : React.createElement('img', {
-					className: css(this.classes.image, imageLoaded && this.classes.imageLoaded),
+					{ controls: true, name: 'media', className: aphrodite.css(classes.video) },
+					React__default.createElement('source', { src: image.src, type: 'video/mp4' })
+				) : React__default.createElement('img', {
+					className: aphrodite.css(this.classes.image, imageLoaded && this.classes.imageLoaded),
 					onClick: onClickImage,
 					sizes: sizes,
 					alt: image.alt,
@@ -1309,7 +1311,7 @@ var Lightbox = function (_Component) {
 
 			if (!showThumbnails) return;
 
-			return React.createElement(PaginatedThumbnails, {
+			return React__default.createElement(PaginatedThumbnails, {
 				currentImage: currentImage,
 				images: images,
 				offset: thumbnailOffset,
@@ -1326,7 +1328,7 @@ var Lightbox = function (_Component) {
 			    showCloseButton = _props5.showCloseButton;
 
 
-			return React.createElement(Header, {
+			return React__default.createElement(Header, {
 				customControls: customControls,
 				onClose: onClose,
 				showCloseButton: showCloseButton,
@@ -1345,7 +1347,7 @@ var Lightbox = function (_Component) {
 
 			if (!images || !images.length) return null;
 
-			return React.createElement(Footer, {
+			return React__default.createElement(Footer, {
 				caption: images[currentImage].caption,
 				countCurrent: currentImage + 1,
 				countSeparator: imageCountSeparator,
@@ -1364,10 +1366,10 @@ var Lightbox = function (_Component) {
 
 			var Spinner$$1 = spinner;
 
-			return React.createElement(
+			return React__default.createElement(
 				'div',
-				{ className: css(this.classes.spinner, !imageLoaded && this.classes.spinnerActive) },
-				React.createElement(Spinner$$1, {
+				{ className: aphrodite.css(this.classes.spinner, !imageLoaded && this.classes.spinnerActive) },
+				React__default.createElement(Spinner$$1, {
 					color: spinnerColor,
 					size: spinnerSize
 				})
@@ -1376,7 +1378,7 @@ var Lightbox = function (_Component) {
 	}, {
 		key: 'render',
 		value: function render$$1() {
-			return React.createElement(
+			return React__default.createElement(
 				Portal,
 				null,
 				this.renderDialog()
@@ -1384,7 +1386,7 @@ var Lightbox = function (_Component) {
 		}
 	}]);
 	return Lightbox;
-}(Component);
+}(React.Component);
 
 Lightbox.propTypes = {
 	backdropClosesModal: PropTypes.bool,
@@ -1486,4 +1488,6 @@ var defaultStyles = {
 	}
 };
 
-export default Lightbox;
+return Lightbox;
+
+})));

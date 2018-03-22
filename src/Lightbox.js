@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { css, StyleSheet } from 'aphrodite';
 import ScrollLock from 'react-scrolllock';
-import { BounceLoader } from 'react-spinners';
 
 import defaultTheme from './theme';
 import Arrow from './components/Arrow';
@@ -11,10 +10,22 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import PaginatedThumbnails from './components/PaginatedThumbnails';
 import Portal from './components/Portal';
+import DefaultSpinner from './components/Spinner';
 
 import bindFunctions from './utils/bindFunctions';
 import canUseDom from './utils/canUseDom';
 import deepMerge from './utils/deepMerge';
+
+// consumers sometimes provide incorrect type or casing
+function normalizeSourceSet (data) {
+	const sourceSet = data.srcSet || data.srcset;
+
+	if (Array.isArray(sourceSet)) {
+		return sourceSet.join();
+	}
+
+	return sourceSet;
+}
 
 class Lightbox extends Component {
 	constructor (props) {
@@ -38,8 +49,13 @@ class Lightbox extends Component {
 		};
 	}
 	componentDidMount () {
-		if (this.props.isOpen && this.props.enableKeyboardInput) {
-			window.addEventListener('keydown', this.handleKeyboardInput);
+		if (this.props.isOpen) {
+			if (this.props.enableKeyboardInput) {
+				window.addEventListener('keydown', this.handleKeyboardInput);
+			}
+			if (typeof this.props.currentImage === 'number') {
+				this.preloadImage(this.props.currentImage, this.handleImageLoaded);
+			}
 		}
 	}
 	componentWillReceiveProps (nextProps) {
@@ -93,20 +109,21 @@ class Lightbox extends Component {
 	// ==============================
 
 	preloadImage (idx, onload) {
-		const image = this.props.images[idx];
-		if (!image) return;
+		const data = this.props.images[idx];
+
+		if (!data) return;
 
 		if (image.type === 'video') return;
 
 		const img = new Image();
+		const sourceSet = normalizeSourceSet(data);
 
 		// TODO: add error handling for missing images
 		img.onerror = onload;
 		img.onload = onload;
-		img.src = image.src;
-		img.srcSet = image.srcSet || image.srcset;
+		img.src = data.src;
 
-		if (img.srcSet) img.setAttribute('srcset', img.srcSet);
+		if (sourceSet) img.srcset = sourceSet;
 
 		return img;
 	}
@@ -137,8 +154,8 @@ class Lightbox extends Component {
 		this.props.onClickPrev();
 	}
 	closeBackdrop (event) {
-    // make sure event only happens if they click the backdrop
-    // and if the caption is widening the figure element let that respond too
+		// make sure event only happens if they click the backdrop
+		// and if the caption is widening the figure element let that respond too
 		if (event.target.id === 'lightboxBackdrop' || event.target.tagName === 'FIGURE') {
 			this.props.onClose();
 		}
@@ -224,7 +241,7 @@ class Lightbox extends Component {
 					{imageLoaded && this.renderThumbnails()}
 					{imageLoaded && this.renderArrowPrev()}
 					{imageLoaded && this.renderArrowNext()}
-					<ScrollLock />
+					{this.props.preventScroll && <ScrollLock />}
 				</div>
 			</Container>
 		);
@@ -242,15 +259,8 @@ class Lightbox extends Component {
 		if (!images || !images.length) return null;
 
 		const image = images[currentImage];
-		image.srcSet = image.srcSet || image.srcset;
-
-		let srcSet;
-		let sizes;
-
-		if (image.srcSet) {
-			srcSet = image.srcSet.join();
-			sizes = '100vw';
-		}
+		const sourceSet = normalizeSourceSet(image);
+		const sizes = sourceSet ? '100vw' : null;
 
 		const thumbnailsSize = showThumbnails ? this.theme.thumbnail.size : 0;
 		const heightOffset = `${this.theme.header.height + this.theme.footer.height + thumbnailsSize
@@ -273,7 +283,7 @@ class Lightbox extends Component {
 						sizes={sizes}
 						alt={image.alt}
 						src={image.src}
-						srcSet={srcSet}
+						srcSet={sourceSet}
 						style={{
 							cursor: onClickImage ? 'pointer' : 'auto',
 							maxHeight: `calc(100vh - ${heightOffset})`,
@@ -362,10 +372,6 @@ class Lightbox extends Component {
 	}
 }
 
-const DefaultSpinner = (props) => (
-	<BounceLoader {...props} />
-);
-
 Lightbox.propTypes = {
 	backdropClosesModal: PropTypes.bool,
 	closeButtonTitle: PropTypes.string,
@@ -388,6 +394,7 @@ Lightbox.propTypes = {
 	onClickPrev: PropTypes.func,
 	onClose: PropTypes.func.isRequired,
 	preloadNextImage: PropTypes.bool,
+	preventScroll: PropTypes.bool,
 	rightArrowTitle: PropTypes.string,
 	showCloseButton: PropTypes.bool,
 	showImageCount: PropTypes.bool,
@@ -407,6 +414,7 @@ Lightbox.defaultProps = {
 	leftArrowTitle: 'Previous (Left arrow key)',
 	onClickShowNextImage: true,
 	preloadNextImage: true,
+	preventScroll: true,
 	rightArrowTitle: 'Next (Right arrow key)',
 	showCloseButton: true,
 	showImageCount: true,
