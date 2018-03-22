@@ -3,7 +3,7 @@ import React from 'react';
 import { css, StyleSheet } from 'aphrodite/no-important';
 
 import defaults from '../theme';
-import { deepMerge } from '../utils';
+import deepMerge from '../utils/deepMerge';
 import Icon from './Icon';
 
 function Header ({
@@ -58,11 +58,11 @@ const defaultStyles = {
 		verticalAlign: 'bottom',
 
 		// increase hit area
-		height: defaults.close.height + 20,
+		height: 40,
 		marginRight: -10,
 		padding: 10,
-		width: defaults.close.width + 20,
+		width: 40,
 	},
 };
 
-module.exports = Header;
+export default Header;

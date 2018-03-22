@@ -3,7 +3,7 @@ import React from 'react';
 import { css, StyleSheet } from 'aphrodite/no-important';
 
 import defaults from '../theme';
-import { deepMerge } from '../utils';
+import deepMerge from '../utils/deepMerge';
 import Icon from './Icon';
 
 function Arrow ({
@@ -60,7 +60,7 @@ const defaultStyles = {
 		userSelect: 'none',
 	},
 
-	// sizees
+	// sizes
 	arrow__size__medium: {
 		height: defaults.arrow.height,
 		marginTop: defaults.arrow.height / -2,
@@ -89,4 +89,4 @@ const defaultStyles = {
 	},
 };
 
-module.exports = Arrow;
+export default Arrow;
