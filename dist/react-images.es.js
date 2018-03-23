@@ -622,7 +622,7 @@ var defaultStyles$5 = {
 	}
 };
 
-var classes$1 = StyleSheet$1.create({
+var classes = StyleSheet$1.create({
 	paginatedThumbnails: {
 		bottom: theme.container.gutter.vertical,
 		height: theme.thumbnail.size,
@@ -794,7 +794,7 @@ var PaginatedThumbnails = function (_Component) {
 
 			return React.createElement(
 				'div',
-				{ className: css$1(classes$1.paginatedThumbnails) },
+				{ className: css$1(classes.paginatedThumbnails) },
 				this.renderArrowPrev(),
 				thumbnails.map(function (img, idx) {
 					return React.createElement(Thumbnail, _extends({ key: baseOffset + idx
@@ -1071,7 +1071,7 @@ var Lightbox = function (_Component) {
 			// preload current image
 			if (this.props.currentImage !== nextProps.currentImage || !this.props.isOpen && nextProps.isOpen) {
 				var img = this.preloadImage(nextProps.currentImage, this.handleImageLoaded);
-				this.setState({ imageLoaded: img.complete });
+				this.setState({ imageLoaded: !img || img.complete });
 			}
 
 			// add/remove event listeners
@@ -1101,7 +1101,7 @@ var Lightbox = function (_Component) {
 
 			if (!data) return;
 
-			if (image.type === 'video') return;
+			if (data.type === 'video') return;
 
 			var img = new Image();
 			var sourceSet = normalizeSourceSet(data);
@@ -1280,7 +1280,7 @@ var Lightbox = function (_Component) {
 				{ className: css(this.classes.figure) },
 				image.type === 'video' ? React.createElement(
 					'video',
-					{ controls: true, name: 'media', className: css(classes.video) },
+					{ controls: true, name: 'media', className: css(this.classes.video) },
 					React.createElement('source', { src: image.src, type: 'video/mp4' })
 				) : React.createElement('img', {
 					className: css(this.classes.image, imageLoaded && this.classes.imageLoaded),

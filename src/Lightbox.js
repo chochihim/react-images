@@ -87,7 +87,7 @@ class Lightbox extends Component {
 		// preload current image
 		if (this.props.currentImage !== nextProps.currentImage || !this.props.isOpen && nextProps.isOpen) {
 			const img = this.preloadImage(nextProps.currentImage, this.handleImageLoaded);
-			this.setState({ imageLoaded: img.complete });
+			this.setState({ imageLoaded: !img || img.complete });
 		}
 
 		// add/remove event listeners
@@ -113,7 +113,7 @@ class Lightbox extends Component {
 
 		if (!data) return;
 
-		if (image.type === 'video') return;
+		if (data.type === 'video') return;
 
 		const img = new Image();
 		const sourceSet = normalizeSourceSet(data);
@@ -274,7 +274,7 @@ class Lightbox extends Component {
 					<Swipeable onSwipedLeft={this.gotoNext} onSwipedRight={this.gotoPrev} />
 				*/}
 				{image.type === 'video' ? 
-					<video controls name='media' className={css(classes.video)}>
+					<video controls name='media' className={css(this.classes.video)}>
 						<source src={image.src} type='video/mp4' />
 					</video> :
 					<img
